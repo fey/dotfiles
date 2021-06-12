@@ -1,0 +1,8 @@
+roles:
+  - name: geerlingguy.pip
+  - name: geerlingguy.docker
+  - name: gantsign.oh-my-zsh
+  - name: iancleary.github_cli
+collections:
+  - name: community.docker
+  - name: community.general

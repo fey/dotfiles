@@ -3,6 +3,7 @@ roles:
   - name: geerlingguy.docker
   - name: gantsign.oh-my-zsh
   - name: iancleary.github_cli
+  - name: markosamuli.asdf
 collections:
   - name: community.docker
   - name: community.general

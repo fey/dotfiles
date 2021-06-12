@@ -6,12 +6,6 @@
 #       apt_repository:
 #         repo: ppa:gezakovacs/ppa
 
-#     - name: Add chrome
-#       apt_repository:
-#         repo: deb http://dl.google.com/linux/chrome/deb/ stable main
-#         state: present
-#         filename: google-chrome
-
 #     - name: install packages
 #       apt:
 #         update_cache: yes
@@ -71,49 +65,66 @@
 #   - role: iancleary.github_cli
 #     gh_arch: "amd64"
 
-- name: Setup git config
+# - name: Setup git config
+#   hosts: all
+#   tasks:
+#     - name: Set global user.email
+#       community.general.git_config:
+#         name: user.email
+#         scope: global
+#         value: feycot@gmail.com
+
+#     - name: Set global user.name
+#       community.general.git_config:
+#         name: user.name
+#         scope: global
+#         value: feycot
+
+#     - name: Setup aliases to ~/.gitconfig
+#       community.general.git_config:
+#         name: "alias.{{ item.name }}"
+#         scope: global
+#         value: "{{ item.value }}"
+#       with_items:
+#         - { name: co, value: checkout }
+#         - { name: ci, value: commit }
+#         - { name: st, value: status }
+#         - { name: br, value: branch }
+#         - { name: hist, value: "log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short" }
+#         - { name: type, value: 'cat-file -t' }
+#         - { name: dump, value: 'cat-file -p' }
+#         - { name: commend, value: 'commit --amend' }
+
+#     - name: Set vim as editor
+#       community.general.git_config:
+#         name: core.editor
+#         scope: global
+#         value: vim
+
+#     - name: Copy git global ignore file
+#       copy:
+#         src: files/gitignore_global
+#         dest: "~/.gitignore_global"
+
+#     - name: Set global gitignore
+#       community.general.git_config:
+#         name: core.excludesFile
+#         scope: global
+#         value: ~/.gitignore_global
+
+- name: Install asdf and plugins
   hosts: all
-  tasks:
-    - name: Set global user.email
-      community.general.git_config:
-        name: user.email
-        scope: global
-        value: feycot@gmail.com
+  roles:
+    - role: markosamuli.asdf
+      asdf_init_shell: true
+      asdf_plugins:
+        - name: "ruby"
+          versions:
+            - "3.0.1"
+          global: "3.0.1"
 
-    - name: Set global user.name
-      community.general.git_config:
-        name: user.name
-        scope: global
-        value: feycot
-
-    - name: Setup aliases to ~/.gitconfig
-      community.general.git_config:
-        name: "alias.{{ item.name }}"
-        scope: global
-        value: "{{ item.value }}"
-      with_items:
-        - { name: co, value: checkout }
-        - { name: ci, value: commit }
-        - { name: st, value: status }
-        - { name: br, value: branch }
-        - { name: hist, value: "log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short" }
-        - { name: type, value: 'cat-file -t' }
-        - { name: dump, value: 'cat-file -p' }
-        - { name: commend, value: 'commit --amend' }
-
-    - name: Set vim as editor
-      community.general.git_config:
-        name: core.editor
-        scope: global
-        value: vim
-
-    - name: Copy git global ignore file
-      copy:
-        src: files/gitignore_global
-        dest: "~/.gitignore_global"
-
-    - name: Set global gitignore
-      community.general.git_config:
-        name: core.excludesFile
-        scope: global
-        value: ~/.gitignore_global
+        - name: "nodejs"
+          versions:
+            - "16"
+            - "14"
+          global: "16"

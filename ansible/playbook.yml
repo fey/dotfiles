@@ -74,6 +74,18 @@
 - name: Setup git config
   hosts: all
   tasks:
+    - name: Set global user.name
+      community.general.git_config:
+        name: user.email
+        scope: global
+        value: feycot@gmail.com
+
+    - name: Set global user.email
+      community.general.git_config:
+        name: user.email
+        scope: global
+        value: feycot
+
     # - name: Setup aliases to ~/.gitconfig
       # community.general.git_config:
       #   name: "alias.{{ item.name }}"
@@ -91,7 +103,7 @@
     - name: Copy git global ignore file
       copy:
         src: files/gitignore_global
-        dest: "{{ ansible_env.HOME }}/.gitignore_global"
+        dest: "~/.gitignore_global"
 
     - name: Set global gitignore
       community.general.git_config:

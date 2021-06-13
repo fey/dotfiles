@@ -18,3 +18,9 @@ print-facts:
 
 lint:
 	ansible-lint -p ansible/playbook.yml --exclude=../../.ansible
+
+connect-vagrant:
+	ssh vagrant@192.168.33.10
+
+test-vagrant:
+	ansible-playbook -i vagrant/hosts  ansible/playbook.yml  -vv

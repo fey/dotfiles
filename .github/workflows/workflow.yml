@@ -17,7 +17,7 @@ jobs:
         run: |
           sudo useradd -m feycot
           sudo make install-ansible
-          make install-deps
+          cd ansible && ansible-playbook -i hosts  playbook.yml  -vv
 
       - name: Test
         run: make prepare-ubuntu

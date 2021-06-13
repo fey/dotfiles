@@ -13,3 +13,6 @@ prepare-ubuntu:
 
 print-facts:
 	ansible -i ansible/hosts all -m setup
+
+lint:
+	ansible-lint -p ansible/playbook.yml --exclude=../../.ansible

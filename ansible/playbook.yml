@@ -55,15 +55,25 @@
               - tmux
   tasks:
     - name: Set zsh
+      hosts: all
       become: yes
       user:
         name: feycot
         shell: /bin/zsh
 
 - name: Install Github Cli
-  roles:
-  - role: iancleary.github_cli
-    gh_arch: "amd64"
+  hosts: all
+  tasks:
+    - name: Install github3.py
+      pip:
+        name: github3.py
+        state: present
+
+    - name: Install Github CLI
+      include_role:
+        name: iancleary.github_cli
+      vars:
+        gh_arch: "amd64"
 
 - name: Setup git config
   hosts: all
@@ -161,3 +171,13 @@
       community.general.snap:
         classic: yes
         name: [heroku]
+
+- name: Install virtualbox and vagrant
+  hosts: all
+  vars:
+    virtualbox_version: 6.1
+    vagrant_version: 2.2.16
+  roles:
+    - aeimer.install-virtualbox-vagrant
+  tasks:
+    - name: Download Virtualbox deb

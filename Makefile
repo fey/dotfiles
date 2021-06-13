@@ -1,3 +1,5 @@
+install: install-ansible install-deps
+
 install-ansible:
 	apt update
 	apt install software-properties-common

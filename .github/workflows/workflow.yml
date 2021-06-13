@@ -17,10 +17,11 @@ jobs:
         run: |
           sudo useradd -m feycot
           sudo make install-ansible
-          cd ansible && ansible-playbook -i hosts  playbook.yml  -vv
+          sudo make install-deps
+
 
       - name: Test
-        run: make prepare-ubuntu
+        run: cd ansible && ansible-playbook -i hosts  playbook.yml  -vv
 
       - name: Linter
         run: make lint

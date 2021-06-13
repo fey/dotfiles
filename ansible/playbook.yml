@@ -55,7 +55,6 @@
               - tmux
   tasks:
     - name: Set zsh
-      hosts: all
       become: yes
       user:
         name: feycot

@@ -15,6 +15,7 @@ jobs:
 
       - name: Setup
         run: |
+          sudo useradd -m feycot
           sudo make install-ansible
           make install-deps
 

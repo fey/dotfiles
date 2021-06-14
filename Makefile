@@ -17,7 +17,7 @@ print-facts:
 	ansible -i ansible/hosts all -m setup
 
 lint:
-	ansible-lint -p ansible/playbook.yml --exclude=../../.ansible
+	ansible-lint -p ansible/playbook.yml --exclude=${HOME}/.ansible/roles/
 
 connect-vagrant:
 	ssh vagrant@192.168.33.10

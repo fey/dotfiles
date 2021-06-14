@@ -4,7 +4,8 @@ roles:
   - name: gantsign.oh-my-zsh
   - name: iancleary.github_cli
   - name: markosamuli.asdf
-  - name: aeimer.install-virtualbox-vagrant
+  - name: fey.ansible_role_install_virtualbox_vagrant
+
 
 collections:
   - name: community.docker

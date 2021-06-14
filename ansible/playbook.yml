@@ -170,4 +170,4 @@
 - name: Install virtualbox and vagrant
   hosts: all
   roles:
-    - fey.ansible_role_install_virtualbox_vagrant
+    - fey.install_virtualbox_vagrant

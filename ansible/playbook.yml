@@ -171,3 +171,8 @@
   hosts: all
   roles:
     - fey.install_virtualbox_vagrant
+
+- hosts: all
+  become: true
+  roles:
+    - role: diodonfrost.terraform

@@ -5,6 +5,7 @@ roles:
   - name: iancleary.github_cli
   - name: markosamuli.asdf
   - name: fey.install_virtualbox_vagrant
+  - name: diodonfrost.terraform
 
 collections:
   - name: community.docker

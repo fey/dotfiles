@@ -149,6 +149,16 @@
           versions: ["8.0.7"]
           global: "8.0.7"
 
+- name: Install deps to build PHP via asdf
+  hosts: all
+  tasks:
+    - name: Add $HOME/.local/bin to path
+      lineinfile:
+        state: present
+        path: ~/.zshrc
+        line: export PATH="$HOME/.local/bin:$PATH"
+
+
 - name: Install snaps
   hosts: all
   tasks:

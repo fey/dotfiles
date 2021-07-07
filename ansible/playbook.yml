@@ -29,7 +29,7 @@
     pip_install_packages:
       - name: docker
     docker_users:
-    - feycot
+    - "{{ user_name }}"
   roles:
     - geerlingguy.pip
     - geerlingguy.docker
@@ -40,7 +40,7 @@
     - role: gantsign.oh-my-zsh
       oh_my_zsh_install: yes
       users:
-        - username: feycot
+        - username: "{{ user_name }}"
           oh_my_zsh:
             theme: murilasso
             plugins:
@@ -65,7 +65,7 @@
     - name: Set zsh
       become: yes
       user:
-        name: feycot
+        name: "{{ user_name }}"
         shell: /bin/zsh
 
     - name: Add $HOME/.local/bin to path
@@ -73,7 +73,6 @@
         state: present
         path: ~/.zshrc
         line: export PATH="$HOME/.local/bin:$PATH"
-
 
 - name: Install deps to build PHP via asdf
   hosts: all
@@ -123,13 +122,13 @@
       community.general.git_config:
         name: user.email
         scope: global
-        value: feycot@gmail.com
+        value: "{{ user_email }}"
 
     - name: Set global user.name
       community.general.git_config:
         name: user.name
         scope: global
-        value: feycot
+        value: "{{ user_name }}"
 
     - name: Setup aliases to ~/.gitconfig
       community.general.git_config:

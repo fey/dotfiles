@@ -19,7 +19,6 @@ jobs:
           sudo make install-ansible
           make install-deps
 
-
       - name: Test
         run: cd ansible && ansible-playbook -i hosts  playbook.yml  -vv
 

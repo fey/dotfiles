@@ -4,7 +4,7 @@ install-ansible:
 	apt update
 	apt install software-properties-common
 	add-apt-repository --yes --update ppa:ansible/ansible
-	apt install -y ansible make
+	apt install -yq ansible ansible-lint make
 
 install-deps:
 	cd ansible && ansible-galaxy collection install -r requirements.yml

@@ -1,4 +1,4 @@
-- name: Install packages
+- name: Install tools packages
   hosts: all
   become: yes
   tasks:
@@ -19,7 +19,6 @@
           - git-extras
           - unetbootin
           - tmux
-          - google-chrome-stable
           - unetbootin
           - fzf
 
@@ -53,12 +52,55 @@
               - heroku
               - laravel
               - tmux
+              - zsh-syntax-highlighting
+    - role: markosamuli.asdf
+      asdf_init_shell: true
+
   tasks:
+    - name: Install
+      ansible.builtin.git:
+        repo: "https://github.com/zsh-users/zsh-syntax-highlighting.git"
+        dest: ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+
     - name: Set zsh
       become: yes
       user:
         name: feycot
         shell: /bin/zsh
+
+    - name: Add $HOME/.local/bin to path
+      lineinfile:
+        state: present
+        path: ~/.zshrc
+        line: export PATH="$HOME/.local/bin:$PATH"
+
+
+- name: Install deps to build PHP via asdf
+  hosts: all
+  become: yes
+  tasks:
+    - name: install deps for php
+      apt:
+        name: [autoconf, bison, build-essential, curl, gettext, git, libgd-dev, libcurl4-openssl-dev, libedit-dev,
+        libicu-dev, libjpeg-dev, libmysqlclient-dev, libonig-dev, libpng-dev, libpq-dev, libreadline-dev, libsqlite3-dev,
+        libssl-dev, libxml2-dev, libzip-dev, openssl, pkg-config, re2c, zlib1g-dev]
+
+- name: Install asdf and plugins
+  hosts: all
+  roles:
+    - role: markosamuli.asdf
+      asdf_plugins:
+        - name: "ruby"
+          versions: ["3.0.1"]
+          global: "3.0.1"
+
+        - name: "nodejs"
+          versions: ["16.3.0", "15.14.0", "14.17.0"]
+          global: "16.3.0"
+
+        - name: "php"
+          versions: ["8.0.7"]
+          global: "8.0.7"
 
 - name: Install Github Cli
   hosts: all
@@ -121,44 +163,6 @@
         scope: global
         value: ~/.gitignore_global
 
-- name: Install deps to build PHP via asdf
-  hosts: all
-  become: yes
-  tasks:
-    - name: install deps for php
-      apt:
-        name: [autoconf, bison, build-essential, curl, gettext, git, libgd-dev, libcurl4-openssl-dev, libedit-dev,
-        libicu-dev, libjpeg-dev, libmysqlclient-dev, libonig-dev, libpng-dev, libpq-dev, libreadline-dev, libsqlite3-dev,
-        libssl-dev, libxml2-dev, libzip-dev, openssl, pkg-config, re2c, zlib1g-dev]
-
-- name: Install asdf and plugins
-  hosts: all
-  roles:
-    - role: markosamuli.asdf
-      asdf_init_shell: true
-      asdf_plugins:
-        - name: "ruby"
-          versions: ["3.0.1"]
-          global: "3.0.1"
-
-        - name: "nodejs"
-          versions: ["16.3.0", "15.14.0", "14.17.0"]
-          global: "16.3.0"
-
-        - name: "php"
-          versions: ["8.0.7"]
-          global: "8.0.7"
-
-- name: Install deps to build PHP via asdf
-  hosts: all
-  tasks:
-    - name: Add $HOME/.local/bin to path
-      lineinfile:
-        state: present
-        path: ~/.zshrc
-        line: export PATH="$HOME/.local/bin:$PATH"
-
-
 - name: Install snaps
   hosts: all
   tasks:
@@ -182,7 +186,8 @@
   roles:
     - fey.install_virtualbox_vagrant
 
-- hosts: all
+- name: Install terraform
+  hosts: all
   become: true
   roles:
     - role: diodonfrost.terraform
